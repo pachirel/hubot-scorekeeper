@@ -47,12 +47,23 @@ class Scorekeeper
     func false, @_scores[user] or 0
 
   rank: (func)->
+    current_rank = 0
+    previous_rank = 0
+    current_rank_score = undefined
     ranking = (for name, score of @_scores
-      [name, score]
-    ).sort (a, b) -> b[1] - a[1]
-    func false, (for i in ranking
-      i[0]
+      [name, score, 0]
+    ).sort((a, b) -> b[1] - a[1]).map((a) ->
+      current_rank++
+      if current_rank_score == a[1]
+        a[2] = previous_rank
+      else
+        a[2] = current_rank
+      current_rank_score = a[1]
+      previous_rank = a[2]
+      a
     )
+
+    func false, ranking
 
   _load: ->
     scores_json = @robot.brain.get _prefix
@@ -88,8 +99,8 @@ module.exports = (robot) ->
 
   robot.respond /scorekeeper$|show(?: me)?(?: the)? (?:scorekeeper|scoreboard)$/i, (msg) ->
     scorekeeper.rank (error, result) ->
-      msg.send (for rank, name of result
-        "#{parseInt(rank) + 1} : #{name}"
+      msg.send (for r in result
+        "#{r[0]} (#{r[1]}pt)"
       ).join("\n")
 
   robot.respond /scorekeeper (.+)$|what(?:'s| is)(?: the)? score of (.+)\??$/i, (msg) ->
