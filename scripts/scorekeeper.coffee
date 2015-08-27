@@ -95,7 +95,7 @@ module.exports = (robot) ->
 
   robot.hear /\w+(?:(?:\+\+)|(?:\-\-))/g, (msg) ->
     for str in msg.match
-      user = userName(str.slice(0, -2))
+      user = userName(str.slice(0, -2).toLowerCase())
       direction = str.slice(-2)
       if direction == "++"
         scorekeeper.increment user, (error, result) ->
