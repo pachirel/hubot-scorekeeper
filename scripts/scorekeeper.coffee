@@ -132,7 +132,10 @@ module.exports = (robot) ->
   robot.respond /scorekeeper$|show(?: me)?(?: the)? (?:scorekeeper|scoreboard)$/i, (msg) ->
     scorekeeper.rank (error, result) ->
       msg.send (for r in result
-        "#{r[0]} (#{r[1]}pt)"
+        if r[0] == 'ash'
+          "-|------------|-\n#{r[0]} (#{r[1]}pt)"
+        else
+          "#{r[0]} (#{r[1]}pt)"
       ).join("\n")
 
   robot.respond /scorekeeper remove (.+)$/i, (msg) ->
