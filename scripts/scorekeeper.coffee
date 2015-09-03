@@ -21,11 +21,11 @@ class Scorekeeper
   comments =
     'increment': [
       'incremented',
-      'Cool :sunglasses:',
-      'Congrats! :tada:',
-      'Great!!',
-      'Wow',
+      ':sunglasses:',
+      ':tada:',
       ':+1:',
+      'すごい！',
+      'やったね！',
       '惚れてまうやろー！！',
       'なかなかやるようだな',
       'いいね！',
@@ -37,6 +37,7 @@ class Scorekeeper
       '...',
       '負けないで！',
       'がんばって！',
+      'どうしてこうなった',
     ]
 
   constructor: (@robot) ->
