@@ -18,6 +18,27 @@
 class Scorekeeper
   _prefix = "scorekeeper"
 
+  comments =
+    'increment': [
+      'incremented',
+      'Cool :sunglasses:',
+      'Congrats! :tada:',
+      'Great!!',
+      'Wow',
+      ':+1:',
+      '惚れてまうやろー！！',
+      'なかなかやるようだな',
+      'いいね！',
+    ],
+    'decrement': [
+      'decremented',
+      ':-1:',
+      ':cry:',
+      '...',
+      '負けないで！',
+      'がんばって！',
+    ]
+
   constructor: (@robot) ->
     @_loaded = false
     @_scores = {}
@@ -71,6 +92,10 @@ class Scorekeeper
 
     func false, ranking
 
+  pickComment: (event) ->
+    candidates = comments[event]
+    candidates[Math.floor(Math.random() * candidates.length)]
+
   _load: ->
     scores_json = @robot.brain.get _prefix
     scores_json = scores_json or '{}'
@@ -99,10 +124,10 @@ module.exports = (robot) ->
       direction = str.slice(-2)
       if direction == "++"
         scorekeeper.increment user, (error, result) ->
-          msg.send "incremented #{user} (#{result} pt)"
+          msg.send "#{scorekeeper.pickComment('increment')} #{user} (#{result} pt)"
       else if direction == "--"
         scorekeeper.decrement user, (error, result) ->
-          msg.send "decremented #{user} (#{result} pt)"
+          msg.send "#{scorekeeper.pickComment('decrement')} #{user} (#{result} pt)"
 
   robot.respond /scorekeeper$|show(?: me)?(?: the)? (?:scorekeeper|scoreboard)$/i, (msg) ->
     scorekeeper.rank (error, result) ->
