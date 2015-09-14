@@ -74,6 +74,13 @@ class Scorekeeper
     @_save()
     func false, score
 
+  reset: (func) ->
+    scores = @_scores
+    scores_json = '{}'
+    @_scores = JSON.parse scores_json
+    @_save()
+    func false, scores
+
   rank: (func)->
     current_rank = 0
     previous_rank = 0
@@ -119,7 +126,15 @@ module.exports = (robot) ->
       user = user.replace(mention_matcher, "")
     user
 
-  robot.hear /\w+(?:(?:\+\+)|(?:\-\-))/g, (msg) ->
+  sendRanking = (msg, result) ->
+    msg.send (for r in result
+      if r[0] == 'ash'
+        "-|------------|-\n#{r[0]} (#{r[1]}pt)"
+      else
+        "#{r[0]} (#{r[1]}pt)"
+    ).join("\n")
+
+  robot.hear /\w+((\+\+)|(\-\-))/g, (msg) ->
     for str in msg.match
       user = userName(str.slice(0, -2).toLowerCase())
       direction = str.slice(-2)
@@ -132,17 +147,18 @@ module.exports = (robot) ->
 
   robot.respond /scorekeeper$|show(?: me)?(?: the)? (?:scorekeeper|scoreboard)$/i, (msg) ->
     scorekeeper.rank (error, result) ->
-      msg.send (for r in result
-        if r[0] == 'ash'
-          "-|------------|-\n#{r[0]} (#{r[1]}pt)"
-        else
-          "#{r[0]} (#{r[1]}pt)"
-      ).join("\n")
+      sendRanking(msg, result)
 
   robot.respond /scorekeeper remove (.+)$/i, (msg) ->
     user = userName(msg.match[1])
     scorekeeper.remove user, (error, result) ->
       msg.send "#{user} has been removed. (#{result} pt)"
+
+  robot.respond /reset scorekeeper$/i, (msg) ->
+    scorekeeper.rank (error, result) ->
+      sendRanking(msg, result)
+    scorekeeper.reset (error, result) ->
+      msg.send "\n===== Scorekeeper is reset ====="
 
   robot.respond /scorekeeper (.+)$|what(?:'s| is)(?: the)? score of (.+)\??$/i, (msg) ->
     user = userName(msg.match[1] || msg.match[2])
