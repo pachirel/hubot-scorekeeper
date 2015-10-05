@@ -141,13 +141,14 @@ module.exports = (robot) ->
   robot.hear /\w+((\+\+)|(\-\-))/g, (msg) ->
     for str in msg.match
       user = userName(str.slice(0, -2).toLowerCase())
-      direction = str.slice(-2)
-      if direction == "++"
+      switch str.slice(-2)
+      when "++"
         scorekeeper.increment user, (error, result) ->
           msg.send "#{scorekeeper.pickComment('increment')} #{user} (#{result} pt)"
-      else if direction == "--"
+      when "--"
         scorekeeper.decrement user, (error, result) ->
           msg.send "#{scorekeeper.pickComment('decrement')} #{user} (#{result} pt)"
+
 
   robot.respond /scorekeeper$|show(?: me)?(?: the)? (?:scorekeeper|scoreboard)$/i, (msg) ->
     scorekeeper.rank (error, result) ->
