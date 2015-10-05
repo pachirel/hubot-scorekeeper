@@ -7,10 +7,12 @@
 # Commands:
 #   <name>++ - Increment <name>'s point
 #   <name>-- - Decrement <name>'s point
-#   scorekeeper - Show scoreboard
-#   show scoreboard - Show scoreboard
-#   scorekeeper <name> - Show current point of <name>
-#   what's the score of <name> - Show current point of <name>
+#   hubot scorekeeper - Show scoreboard
+#   hubot show scoreboard - Show scoreboard
+#   hubot scorekeeper <name> - Show current point of <name>
+#   hubot what's the score of <name> - Show current point of <name>
+#   hubot scorekeeper remove <name> - Remove current point of <name>
+#   hubot reset scorekeper - Clear all points
 #
 # Author:
 #   yoshiori
