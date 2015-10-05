@@ -138,17 +138,17 @@ module.exports = (robot) ->
         "#{r[0]} (#{r[1]}pt)"
     ).join("\n")
 
-  robot.hear /\w+((\+\+)|(\-\-))/g, (msg) ->
+  robot.hear /\w+\+\+/g, (msg) ->
     for str in msg.match
       user = userName(str.slice(0, -2).toLowerCase())
-      switch str.slice(-2)
-      when "++"
-        scorekeeper.increment user, (error, result) ->
-          msg.send "#{scorekeeper.pickComment('increment')} #{user} (#{result} pt)"
-      when "--"
-        scorekeeper.decrement user, (error, result) ->
-          msg.send "#{scorekeeper.pickComment('decrement')} #{user} (#{result} pt)"
+      scorekeeper.increment user, (error, result) ->
+        msg.send "#{scorekeeper.pickComment('increment')} #{user} (#{result} pt)"
 
+  robot.hear /\w+\-\-/g, (msg) ->
+    for str in msg.match
+      user = userName(str.slice(0, -2).toLowerCase())
+      scorekeeper.decrement user, (error, result) ->
+        msg.send "#{scorekeeper.pickComment('decrement')} #{user} (#{result} pt)"
 
   robot.respond /scorekeeper$|show(?: me)?(?: the)? (?:scorekeeper|scoreboard)$/i, (msg) ->
     scorekeeper.rank (error, result) ->
