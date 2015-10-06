@@ -37,7 +37,7 @@ class Scorekeeper
     ],
     'decrement': [
       'decremented',
-      'broken_heart',
+      ':broken_heart:',
       ':cry:',
       ':money_with_wings:',
       '...',
