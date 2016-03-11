@@ -29,16 +29,17 @@ class Scorekeeper
       ':+1:',
       'すごい！',
       'やったね！',
-      ':hug:',
       '愛おしい..',
       'フルスケール',
-      'なかなかやるようだな',
+      ':sparkles: :sparkles: :sparkles:',
       'いいね！',
     ],
     'decrement': [
       'decremented',
       ':broken_heart:',
       ':cry:',
+      ':sbr_a:',
+      ':sbr_b:',
       ':money_with_wings:',
       '...',
       '負けないで！',
@@ -151,6 +152,11 @@ module.exports = (robot) ->
       user = userName(str.slice(0, -2).toLowerCase())
       scorekeeper.decrement user, (error, result) ->
         msg.send "#{scorekeeper.pickComment('decrement')} #{user} (#{result} pt)"
+
+  robot.hear /OK牧場/g, (msg) ->
+    user = 'yaman'
+    scorekeeper.decrement user, (error, result) ->
+      msg.send "#{scorekeeper.pickComment('decrement')} #{user} (#{result} pt)"
 
   robot.respond /scorekeeper$|show(?: me)?(?: the)? (?:scorekeeper|scoreboard)$/i, (msg) ->
     scorekeeper.rank (error, result) ->
