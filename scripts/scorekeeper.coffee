@@ -154,9 +154,9 @@ module.exports = (robot) ->
         msg.send "#{scorekeeper.pickComment('decrement')} #{user} (#{result} pt)"
 
   robot.hear /OK牧場/g, (msg) ->
-    user = 'yaman'
+    user = msg.message.user.name
     scorekeeper.decrement user, (error, result) ->
-      msg.send "#{scorekeeper.pickComment('decrement')} #{user} (#{result} pt)"
+      msg.send ":sbr_a: #{scorekeeper.pickComment('decrement')} #{user} (#{result} pt) :sbr_b:"
 
   robot.respond /scorekeeper$|show(?: me)?(?: the)? (?:scorekeeper|scoreboard)$/i, (msg) ->
     scorekeeper.rank (error, result) ->
