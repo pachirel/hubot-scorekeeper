@@ -22,7 +22,6 @@ class Scorekeeper
 
   comments =
     'increment': [
-      'incremented',
       ':sunglasses:',
       ':tada:',
       ':congratulations:',
@@ -32,10 +31,10 @@ class Scorekeeper
       '愛おしい..',
       'フルスケール',
       ':sparkles: :sparkles: :sparkles:',
+      ':inb:',
       'いいね！',
     ],
     'decrement': [
-      'decremented',
       ':broken_heart:',
       ':cry:',
       ':sbr_a:',
@@ -136,7 +135,7 @@ module.exports = (robot) ->
   sendRanking = (msg, result) ->
     msg.send (for r in result
       if r[0] == 'ash'
-        "-|------------|-\n#{r[0]} (#{r[1]}pt)"
+        "~#{r[0]}~ (#{r[1]}pt)"
       else
         "#{r[0]} (#{r[1]}pt)"
     ).join("\n")
