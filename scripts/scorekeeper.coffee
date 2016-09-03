@@ -26,13 +26,13 @@ class Scorekeeper
       ':tada:',
       ':congratulations:',
       ':+1:',
-      'すごい！',
-      'やったね！',
-      '愛おしい..',
-      'フルスケール',
+      'Great!',
+      'Congratulations!',
+      ':heart_eyes:.',
+      'Full-scale',
       ':sparkles: :sparkles: :sparkles:',
       ':inb:',
-      'いいね！',
+      'Nice!',
     ],
     'decrement': [
       ':broken_heart:',
@@ -41,9 +41,8 @@ class Scorekeeper
       ':sbr_b:',
       ':money_with_wings:',
       '...',
-      '負けないで！',
-      'がんばって！',
-      'どうしてこうなった',
+      'Never mind!',
+      'May the :happyturn: be with you',
     ]
 
   constructor: (@robot) ->
