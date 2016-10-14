@@ -28,7 +28,7 @@ class Scorekeeper
       ':+1:',
       'Great!',
       'Congratulations!',
-      ':heart_eyes:.',
+      ':heart_eyes:',
       'Full-scale',
       ':sparkles: :sparkles: :sparkles:',
       ':inb:',
