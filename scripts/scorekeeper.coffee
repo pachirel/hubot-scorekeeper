@@ -151,7 +151,7 @@ module.exports = (robot) ->
       scorekeeper.decrement user, (error, result) ->
         msg.send "#{scorekeeper.pickComment('decrement')} #{user} (#{result} pt)"
 
-  robot.hear /[0oOｏＯ][kKｋＫ]牧場/g, (msg) ->
+  robot.hear /[0oOｏＯ][kKｋＫ](牧場|b|B|Ｂ)/g, (msg) ->
     user = msg.message.user.name
     scorekeeper.decrement user, (error, result) ->
       msg.send ":sbr_a: #{scorekeeper.pickComment('decrement')} #{user} (#{result} pt) :sbr_b:"
