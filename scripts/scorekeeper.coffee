@@ -39,8 +39,6 @@ class Scorekeeper
       ':cry:',
       ':sbr_a:',
       ':sbr_b:',
-      ':money_with_wings:',
-      '...',
       'Never mind!',
       'May the :happyturn: be with you',
     ]
@@ -133,28 +131,25 @@ module.exports = (robot) ->
 
   sendRanking = (msg, result) ->
     msg.send (for r in result
-      if r[0] == 'ash'
-        "~#{r[0]}~ (#{r[1]}pt)"
-      else
-        "#{r[0]} (#{r[1]}pt)"
+      "#{r[0]} (#{r[1]}pt)"
     ).join("\n")
 
   robot.hear /\w+\+\+/g, (msg) ->
     for str in msg.match
       user = userName(str.slice(0, -2).toLowerCase())
       scorekeeper.increment user, (error, result) ->
-        msg.send "#{scorekeeper.pickComment('increment')} #{user} (#{result} pt)"
+        msg.send "#{scorekeeper.pickComment('increment')} #{user}"
 
   robot.hear /\w+\-\-/g, (msg) ->
     for str in msg.match
       user = userName(str.slice(0, -2).toLowerCase())
       scorekeeper.decrement user, (error, result) ->
-        msg.send "#{scorekeeper.pickComment('decrement')} #{user} (#{result} pt)"
+        msg.send "#{scorekeeper.pickComment('decrement')} #{user}"
 
-  robot.hear /[0oOｏＯ][kKｋＫ](牧場|b|B|Ｂ)/g, (msg) ->
+  robot.hear /[oOｏＯ][kKｋＫ](牧場|b|B|Ｂ)/g, (msg) ->
     user = msg.message.user.name
     scorekeeper.decrement user, (error, result) ->
-      msg.send ":sbr_a: #{scorekeeper.pickComment('decrement')} #{user} (#{result} pt) :sbr_b:"
+      msg.send ":sbr_a: #{scorekeeper.pickComment('decrement')} #{user} :sbr_b:"
 
   robot.respond /scorekeeper$|show(?: me)?(?: the)? (?:scorekeeper|scoreboard)$/i, (msg) ->
     scorekeeper.rank (error, result) ->
@@ -166,8 +161,6 @@ module.exports = (robot) ->
       msg.send "#{user} has been removed. (#{result} pt)"
 
   robot.respond /reset scorekeeper$/i, (msg) ->
-    scorekeeper.rank (error, result) ->
-      sendRanking(msg, result)
     scorekeeper.reset (error, result) ->
       msg.send "\n===== Scorekeeper is reset ====="
 
