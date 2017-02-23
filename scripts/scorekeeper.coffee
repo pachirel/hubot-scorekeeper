@@ -24,15 +24,15 @@ class Scorekeeper
     'increment': [
       ':sunglasses:',
       ':tada:',
-      ':congratulations:',
       ':+1:',
       'Great!',
       'Congratulations!',
       ':heart_eyes:',
       'Full-scale',
-      ':sparkles: :sparkles: :sparkles:',
+      ':sparkles:',
       ':inb:',
-      'Nice!',
+      'well deserved',
+      'kudos'
     ],
     'decrement': [
       ':broken_heart:',
