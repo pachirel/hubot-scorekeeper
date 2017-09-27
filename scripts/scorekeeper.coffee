@@ -55,6 +55,7 @@ class Scorekeeper
       @_loaded = true
 
   increment: (user, func) ->
+    return if blacklist.indexOf(user) >= 0
     unless @_loaded
       setTimeout((=> @increment(user,func)), 200)
       return
@@ -64,6 +65,7 @@ class Scorekeeper
     @score user, func
 
   decrement: (user, func) ->
+    return if blacklist.indexOf(user) >= 0
     unless @_loaded
       setTimeout((=> @decrement(user,func)), 200)
       return
@@ -141,14 +143,12 @@ module.exports = (robot) ->
   robot.hear /\w{2,}\+\+/g, (msg) ->
     for str in msg.match
       user = userName(str.slice(0, -2).toLowerCase())
-      return if blacklist.indexOf(user) >= 0
       scorekeeper.increment user, (error, result) ->
         msg.send "#{scorekeeper.pickComment('increment')} #{user}"
 
   robot.hear /\w{2,}\-\-/g, (msg) ->
     for str in msg.match
       user = userName(str.slice(0, -2).toLowerCase())
-      return if blacklist.indexOf(user) >= 0
       scorekeeper.decrement user, (error, result) ->
         msg.send "#{scorekeeper.pickComment('decrement')} #{user}"
 
