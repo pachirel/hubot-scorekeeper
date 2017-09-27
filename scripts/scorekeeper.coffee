@@ -43,6 +43,10 @@ class Scorekeeper
       'May the :happyturn: be with you',
     ]
 
+  blacklist = [
+    'xn'
+  ]
+
   constructor: (@robot) ->
     @_loaded = false
     @_scores = {}
@@ -134,19 +138,21 @@ module.exports = (robot) ->
       "#{r[0]} (#{r[1]}pt)"
     ).join("\n")
 
-  robot.hear /\w+\+\+/g, (msg) ->
+  robot.hear /\w{2,}\+\+/g, (msg) ->
     for str in msg.match
       user = userName(str.slice(0, -2).toLowerCase())
+      return if blacklist.indexOf(user) >= 0
       scorekeeper.increment user, (error, result) ->
         msg.send "#{scorekeeper.pickComment('increment')} #{user}"
 
-  robot.hear /\w+\-\-/g, (msg) ->
+  robot.hear /\w{2,}\-\-/g, (msg) ->
     for str in msg.match
       user = userName(str.slice(0, -2).toLowerCase())
+      return if blacklist.indexOf(user) >= 0
       scorekeeper.decrement user, (error, result) ->
         msg.send "#{scorekeeper.pickComment('decrement')} #{user}"
 
-  robot.hear /[oOｏＯ][kKｋＫ](牧場|b|B|Ｂ)/g, (msg) ->
+  robot.hear /[OＯ][KＫ](牧場|B|Ｂ)/g, (msg) ->
     user = msg.message.user.name
     scorekeeper.decrement user, (error, result) ->
       msg.send ":sbr_a: #{scorekeeper.pickComment('decrement')} #{user} :sbr_b:"
