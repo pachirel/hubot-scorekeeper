@@ -138,17 +138,17 @@ module.exports = (robot) ->
       "#{r[0]} (#{r[1]}pt)"
     ).join("\n")
 
-  robot.hear /\w{2,}\+\+/g, (msg) ->
+  robot.hear /\w+\+\+/g, (msg) ->
     for str in msg.match
       user = userName(str.slice(0, -2).toLowerCase())
-      return if blacklist.indexOf(user) >= 0
+      return if user.length < 2 || blacklist.indexOf(user) >= 0
       scorekeeper.increment user, (error, result) ->
         msg.send "#{scorekeeper.pickComment('increment')} #{user}"
 
-  robot.hear /\w{2,}\-\-/g, (msg) ->
+  robot.hear /\w+\-\-/g, (msg) ->
     for str in msg.match
       user = userName(str.slice(0, -2).toLowerCase())
-      return if blacklist.indexOf(user) >= 0
+      return if user.length < 2 || blacklist.indexOf(user) >= 0
       scorekeeper.decrement user, (error, result) ->
         msg.send "#{scorekeeper.pickComment('decrement')} #{user}"
 
