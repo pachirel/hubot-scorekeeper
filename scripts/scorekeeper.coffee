@@ -140,6 +140,13 @@ module.exports = (robot) ->
       "#{r[0]} (#{r[1]}pt)"
     ).join("\n")
 
+  robot.hear /\w{2,}\+{5}/g, (msg) ->
+    great = "☆o｡:･;;.｡:*･☆o｡:･;;.｡:*･☆o｡:･;;.｡:*･☆o｡:･;;.｡:*･☆o｡:･;;.｡:*･☆"
+    for str in msg.match
+      user = userName(str.slice(0, -5).toLowerCase())
+      scorekeeper.increment user, (error, result) ->
+        msg.send "#{great}\n#{scorekeeper.pickComment('increment')} #{user}\n#{great}"
+
   robot.hear /\w{2,}\+\+/g, (msg) ->
     for str in msg.match
       user = userName(str.slice(0, -2).toLowerCase())
