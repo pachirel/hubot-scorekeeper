@@ -140,22 +140,22 @@ module.exports = (robot) ->
       "#{r[0]} (#{r[1]}pt)"
     ).join("\n")
 
-  robot.hear /\w{2,}\+{5}/g, (msg) ->
+  robot.hear /[^+-]{2,}\+{5,}(?:\s|$)/g, (msg) ->
     great = "☆o｡:･;;.｡:*･☆o｡:･;;.｡:*･☆o｡:･;;.｡:*･☆o｡:･;;.｡:*･☆o｡:･;;.｡:*･☆"
     for str in msg.match
-      user = userName(str.slice(0, -5).toLowerCase())
+      user = userName(str.replace(/\+/g, '').toLowerCase())
       scorekeeper.increment user, (error, result) ->
         msg.send "#{great}\n#{scorekeeper.pickComment('increment')} #{user}\n#{great}"
 
-  robot.hear /\w{2,}\+\+/g, (msg) ->
+  robot.hear /[^+-]{2,}\+{2,4}(?:\s|$)/g, (msg) ->
     for str in msg.match
-      user = userName(str.slice(0, -2).toLowerCase())
+      user = userName(str.replace(/\+/g, '').toLowerCase())
       scorekeeper.increment user, (error, result) ->
         msg.send "#{scorekeeper.pickComment('increment')} #{user}"
 
-  robot.hear /\w{2,}\-\-/g, (msg) ->
+  robot.hear /[^+-]{2,}\-{2,}(?:\s|$)/g, (msg) ->
     for str in msg.match
-      user = userName(str.slice(0, -2).toLowerCase())
+      user = userName(str.replace(/-/g, '').toLowerCase())
       scorekeeper.decrement user, (error, result) ->
         msg.send "#{scorekeeper.pickComment('decrement')} #{user}"
 
