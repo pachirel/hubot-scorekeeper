@@ -10,8 +10,7 @@
     "hubot",
     "hubot-scripts"
   ],
-  "dependencies": {
-  },
+  "dependencies": {},
   "repository": {
     "type": "git",
     "url": "git@github.com:yoshiori/hubot-scorekeeper.git"
