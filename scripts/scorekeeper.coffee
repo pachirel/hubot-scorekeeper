@@ -143,20 +143,20 @@ module.exports = (robot) ->
   robot.hear /[0-9A-Za-z]{2,}\+{5,}(?:[^+]|$)/g, (msg) ->
     great = "☆o｡:･;;.｡:*･☆o｡:･;;.｡:*･☆o｡:･;;.｡:*･☆o｡:･;;.｡:*･☆o｡:･;;.｡:*･☆"
     for str in msg.match
-      user = userName(str.replace(/\+/g, '').toLowerCase())
+      user = userName(str.replace(/\+[^+]?/g, '').toLowerCase())
       scorekeeper.increment user, (error, result) ->
         msg.send "#{great}\n#{scorekeeper.pickComment('increment')} #{user}\n#{great}"
 
   robot.hear /[0-9A-Za-z]{2,}\+{2,4}(?:[^+]|$)/g, (msg) ->
     console.log(msg)
     for str in msg.match
-      user = userName(str.replace(/\+/g, '').toLowerCase())
+      user = userName(str.replace(/\+[^+]?/g, '').toLowerCase())
       scorekeeper.increment user, (error, result) ->
         msg.send "#{scorekeeper.pickComment('increment')} #{user}"
 
   robot.hear /[0-9A-Za-z]{2,}\-{2,}(?:[^-]|$)/g, (msg) ->
     for str in msg.match
-      user = userName(str.replace(/-/g, '').toLowerCase())
+      user = userName(str.replace(/-[^-]?/g, '').toLowerCase())
       scorekeeper.decrement user, (error, result) ->
         msg.send "#{scorekeeper.pickComment('decrement')} #{user}"
 
