@@ -140,21 +140,21 @@ module.exports = (robot) ->
       "#{r[0]} (#{r[1]}pt)"
     ).join("\n")
 
-  robot.hear /\w{2,}\+{5,}(?:\s|$)/g, (msg) ->
+  robot.hear /\w{2,}\+{5,}(?:[\s,.!]|$)/g, (msg) ->
     great = "☆o｡:･;;.｡:*･☆o｡☆"
     for str in msg.match
       user = userName(str.replace(/\+[^+]?/g, '').toLowerCase())
       scorekeeper.increment user, (error, result) ->
         msg.send "#{great} #{scorekeeper.pickComment('increment')} #{user} #{great}"
 
-  robot.hear /\w{2,}\+{2,4}(?:\s|$)/g, (msg) ->
+  robot.hear /\w{2,}\+{2,4}(?:[\s,.!]|$)/g, (msg) ->
     console.log(msg)
     for str in msg.match
       user = userName(str.replace(/\+[^+]?/g, '').toLowerCase())
       scorekeeper.increment user, (error, result) ->
         msg.send "#{scorekeeper.pickComment('increment')} #{user}"
 
-  robot.hear /\w{2,}\-{2,}(?:\s|$)/g, (msg) ->
+  robot.hear /\w{2,}\-{2,}(?:[\s,.!]|$)/g, (msg) ->
     for str in msg.match
       user = userName(str.replace(/-[^-]?/g, '').toLowerCase())
       scorekeeper.decrement user, (error, result) ->
